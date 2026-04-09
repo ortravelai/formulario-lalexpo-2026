@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LALEXPO 2026 — Registro VIP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --bg:    #070707;
+      --red:   #e11d2e;
+      --red2:  #ff4456;
+      --text:  #f5f5f5;
+      --muted: #cfcfcf;
+      --card:  rgba(255,255,255,.05);
+      --line:  rgba(255,255,255,.10);
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── BASE ── */
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 55% at 0% 0%,   rgba(225,29,46,0.35) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 45% at 100% 100%, rgba(225,29,46,0.18) 0%, transparent 60%),
+        repeating-linear-gradient(rgba(225,29,46,0.04) 1px, transparent 1px),
+        repeating-linear-gradient(90deg, rgba(225,29,46,0.04) 1px, transparent 1px);
+      background-size: auto, auto, 48px 48px, 48px 48px;
+      background-attachment: fixed;
+      font-family: 'Space Grotesk', Arial, sans-serif;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: rgba(7,7,7,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      color: var(--text);
+    }
+    .nav-logo span { color: var(--red); }
+
+    .nav-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background: rgba(225,29,46,0.08);
+      border: 1px solid rgba(225,29,46,0.30);
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 104px 20px 60px;
+      position: relative;
+    }
+
+    /* ── WATERMARK ── */
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(60px, 12vw, 140px);
+      font-weight: 700;
+      letter-spacing: -2px;
+      white-space: nowrap;
+      color: rgba(225,29,46,0.06);
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      max-width: 640px;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero badge */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 20px;
+      background: rgba(225,29,46,0.08);
+      border: 1px solid rgba(225,29,46,0.35);
+      border-radius: 24px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 28px;
+    }
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--red);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--red);
+      animation: dotPulse 1.8s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes dotPulse {
+      0%,100% { opacity: 1;  transform: scale(1); }
+      50%      { opacity: .3; transform: scale(.65); }
+    }
+
+    /* Hero H1 */
+    h1 {
+      font-size: clamp(28px, 5vw, 46px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--red);
+    }
+
+    /* Hero subtext */
+    .hero-sub {
+      font-size: 15px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.42);
+      line-height: 1.6;
+    }
+    .hero-sub strong {
+      color: rgba(255,255,255,0.65);
+      font-weight: 600;
+    }
+
+    /* ── FORM CARD ── */
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 520px;
+      background: rgba(12,12,12,0.92);
+      border: 1px solid rgba(225,29,46,0.25);
+      border-radius: 20px;
+      padding: 48px 40px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.70);
+      animation: cardIn 0.6s ease both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    /* Top accent gradient line */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      border-radius: 20px 20px 0 0;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(225,29,46,0.7) 25%,
+        var(--red2) 50%,
+        rgba(225,29,46,0.7) 75%,
+        transparent 100%
+      );
+    }
+
+    /* HUD corner brackets */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      pointer-events: none;
+      background-image:
+        /* TL horizontal */ linear-gradient(to right,  rgba(225,29,46,0.65) 0%, rgba(225,29,46,0.65) 24px, transparent 24px),
+        /* TL vertical   */ linear-gradient(to bottom, rgba(225,29,46,0.65) 0%, rgba(225,29,46,0.65) 24px, transparent 24px),
+        /* TR horizontal */ linear-gradient(to left,   rgba(225,29,46,0.65) 0%, rgba(225,29,46,0.65) 24px, transparent 24px),
+        /* TR vertical   */ linear-gradient(to bottom, rgba(225,29,46,0.65) 0%, rgba(225,29,46,0.65) 24px, transparent 24px),
+        /* BL horizontal */ linear-gradient(to right,  rgba(225,29,46,0.65) 0%, rgba(225,29,46,0.65) 24px, transparent 24px),
+        /* BL vertical   */ linear-gradient(to top,    rgba(225,29,46,0.65) 0%, rgba(225,29,46,0.65) 24px, transparent 24px),
+        /* BR horizontal */ linear-gradient(to left,   rgba(225,29,46,0.65) 0%, rgba(225,29,46,0.65) 24px, transparent 24px),
+        /* BR vertical   */ linear-gradient(to top,    rgba(225,29,46,0.65) 0%, rgba(225,29,46,0.65) 24px, transparent 24px);
+      background-size:
+        100% 1.5px, 1.5px 100%,
+        100% 1.5px, 1.5px 100%,
+        100% 1.5px, 1.5px 100%,
+        100% 1.5px, 1.5px 100%;
+      background-position:
+        top left,    top left,
+        top right,   top right,
+        bottom left, bottom left,
+        bottom right,bottom right;
+      background-repeat: no-repeat;
+    }
+
+    /* Card header */
+    .card-header {
+      margin-bottom: 36px;
+    }
+    .card-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(225,29,46,0.20);
+    }
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.3px;
+    }
+    .card-title span { color: rgba(255,255,255,0.40); font-weight: 400; }
+
+    /* ── FORM ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+    }
+    .form-group:last-of-type { margin-bottom: 0; }
+
+    label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    label svg {
+      width: 11px;
+      height: 11px;
+      stroke: rgba(225,29,46,0.55);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 13px 16px;
+      font-size: 14px;
+      font-family: 'Space Grotesk', Arial, sans-serif;
+      font-weight: 400;
+      outline: none;
+      transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input::placeholder {
+      color: rgba(255,255,255,0.15);
+      font-size: 13px;
+    }
+    input:hover {
+      border-color: rgba(255,255,255,0.14);
+    }
+    input:focus {
+      border-color: rgba(225,29,46,0.60);
+      background: rgba(225,29,46,0.05);
+      box-shadow: 0 0 0 3px rgba(225,29,46,0.10), 0 0 20px rgba(225,29,46,0.06);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin: 24px 0;
+    }
+
+    /* ── SUBMIT BUTTON ── */
+    .btn-submit {
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 18px 32px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', Arial, sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 32px rgba(225,29,46,0.45);
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-submit .btn-arrow {
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn-submit:hover::before { left: 100%; }
+    .btn-submit:hover {
+      background: #cc1829;
+      box-shadow: 0 8px 48px rgba(225,29,46,0.65);
+      transform: translateY(-1px);
+    }
+    .btn-submit:hover .btn-arrow {
+      transform: translateX(4px);
+    }
+    .btn-submit:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 24px rgba(225,29,46,0.35);
+    }
+
+    /* ── COUNTER ── */
+    .registradas-counter {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(225,29,46,0.70);
+      margin-top: 14px;
+      letter-spacing: 0.2px;
+    }
+
+    /* ── FOOTER NOTE ── */
+    .form-footer {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.20);
+      margin-top: 20px;
+      letter-spacing: 0.3px;
+      line-height: 1.6;
+    }
+    .form-footer a {
+      color: rgba(225,29,46,0.55);
+      text-decoration: none;
+    }
+
+    /* ── PAGE FOOTER ── */
+    .page-footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 40px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.3px;
+    }
+
+    /* ── SUCCESS STATE ── */
+    .success-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px 0;
+      gap: 0;
+      animation: cardIn 0.5s ease both;
+    }
+    .success-overlay.active { display: flex; }
+
+    .success-ring {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      animation: ringPop 0.5s cubic-bezier(.22,.68,0,1.3) both;
+      box-shadow: 0 0 24px rgba(225,29,46,0.30);
+    }
+    .success-ring svg {
+      width: 30px; height: 30px;
+      stroke: var(--red); fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    @keyframes ringPop {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .success-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .success-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.38);
+      line-height: 1.6;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 560px) {
+      nav { padding: 0 20px; }
+      .nav-badge { display: none; }
+      h1 { font-size: 26px; letter-spacing: -.5px; }
+      .card { padding: 36px 22px 28px; border-radius: 16px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .form-row .form-group { margin-bottom: 16px; }
+      .hero { margin-bottom: 36px; }
+    }
+    @media (max-width: 380px) {
+      .card { padding: 28px 16px 22px; }
+      h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav>
+    <div class="nav-logo">
+      <img src="logo-black.png" alt="G7BSPAY" style="height:28px;width:auto;vertical-align:middle;margin-right:10px;filter:brightness(0) invert(1);">LAL<span>EXPO</span>
+    </div>
+    <div class="nav-badge">G7BSPAY</div>
+  </nav>
+
+  <!-- ── PAGE ── -->
+  <main class="page">
+
+    <!-- Watermark -->
+    <div class="watermark" aria-hidden="true">LALEXPO 2026</div>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+      <div class="hero-badge">
+        <div class="badge-dot" aria-hidden="true"></div>
+        REGISTRO OFICIAL · LALEXPO 2026
+      </div>
+
+      <h1>Tu invitación al evento<br>más grande de <em>LATAM</em></h1>
+
+      <p class="hero-sub">
+        Registro exclusivo para modelos <strong>G7BSPAY</strong> · Cupos limitados
+      </p>
+    </section>
+
+    <!-- ── FORM CARD ── -->
+    <div class="card" role="main">
+
+      <div class="card-header">
+        <div class="card-label">Formulario de registro</div>
+        <div class="card-title">Completa tus datos <span>para reservar tu lugar</span></div>
+      </div>
+
+      <!-- Replace action URL with GHL form embed endpoint -->
+      <form id="registration-form" action="REPLACE_WITH_GHL_FORM_URL" method="POST" novalidate>
+
+        <!-- Row: Nombre + Apellidos -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nombre">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Nombre
+            </label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              placeholder="Tu nombre"
+              autocomplete="given-name"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="apellidos">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Apellidos
+            </label>
+            <input
+              type="text"
+              id="apellidos"
+              name="apellidos"
+              placeholder="Apellidos"
+              autocomplete="family-name"
+            >
+          </div>
+        </div>
+
+        <!-- Teléfono -->
+        <div class="form-group">
+          <label for="telefono">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l1.63-1.63a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Teléfono
+          </label>
+          <input
+            type="tel"
+            id="telefono"
+            name="telefono"
+            placeholder="+57 300 000 0000"
+            autocomplete="tel"
+            required
+          >
+        </div>
+
+        <!-- Gmail -->
+        <div class="form-group">
+          <label for="email">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Gmail
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="correo@gmail.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="divider"></div>
+
+        <button type="submit" class="btn-submit">
+          QUIERO MI INVITACIÓN
+          <span class="btn-arrow" aria-hidden="true">→</span>
+        </button>
+
+        <p class="registradas-counter">
+          🔴 47 modelos ya registradas · Cupos limitados
+        </p>
+
+        <p class="form-footer">
+          Evento exclusivo · G7BSPAY × LALEXPO · Solo mayores de 18&nbsp;años
+        </p>
+
+      </form>
+
+      <!-- Success state (shown after submit via JS) -->
+      <div class="success-overlay" id="success-overlay" role="alert" aria-live="polite">
+        <div class="success-ring">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="success-title">¡Registro exitoso!</div>
+        <p class="success-sub">
+          Tu solicitud fue enviada.<br>
+          Recibirás tu invitación en tu correo pronto.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ── PAGE FOOTER ── -->
+    <footer class="page-footer">
+      © 2026 G7BSPAY · LALEXPO — Todos los derechos reservados
+    </footer>
+
+  </main>
+
+  <script>
+    /* ── FORM SUBMIT ── */
+    (function () {
+      var form    = document.getElementById('registration-form');
+      var success = document.getElementById('success-overlay');
+
+      form.addEventListener('submit', function (e) {
+        /* Validation */
+        var telefono = form.querySelector('[name="telefono"]');
+        var email    = form.querySelector('[name="email"]');
+        var ok = true;
+
+        [telefono, email].forEach(function (el) {
+          if (!el.value.trim()) {
+            el.style.borderColor = 'rgba(225,29,46,0.80)';
+            el.style.boxShadow   = '0 0 0 3px rgba(225,29,46,0.15)';
+            ok = false;
+            el.addEventListener('input', function () {
+              el.style.borderColor = '';
+              el.style.boxShadow   = '';
+            }, { once: true });
+          }
+        });
+
+        if (!ok) { e.preventDefault(); return; }
+
+        /* If action is placeholder, intercept and show success UI */
+        if (form.action.indexOf('REPLACE_WITH_GHL_FORM_URL') !== -1) {
+          e.preventDefault();
+          form.style.display   = 'none';
+          success.classList.add('active');
+        }
+        /* Otherwise form POSTs normally to GHL */
+      });
+    })();
+  </script>
+
+</body>
+</html>
