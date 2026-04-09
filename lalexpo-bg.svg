@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <!-- Fondo base negro -->
+    <linearGradient id="base" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d0d0d"/>
+      <stop offset="100%" stop-color="#070707"/>
+    </linearGradient>
+
+    <!-- Glow rojo superior izquierdo -->
+    <radialGradient id="glow1" cx="15%" cy="10%" r="55%" fx="15%" fy="10%">
+      <stop offset="0%" stop-color="#e11d2e" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#070707" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Glow rojo inferior derecho -->
+    <radialGradient id="glow2" cx="85%" cy="92%" r="45%" fx="85%" fy="92%">
+      <stop offset="0%" stop-color="#e11d2e" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#070707" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Glow rojo central sutil -->
+    <radialGradient id="glow3" cx="50%" cy="50%" r="40%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#e11d2e" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#070707" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Patrón de grid -->
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(225,29,46,0.06)" stroke-width="0.8"/>
+    </pattern>
+
+    <!-- Patrón de puntos -->
+    <pattern id="dots" width="48" height="48" patternUnits="userSpaceOnUse">
+      <circle cx="24" cy="24" r="0.8" fill="rgba(225,29,46,0.12)"/>
+    </pattern>
+
+    <!-- Filtro blur para los glows -->
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+  </defs>
+
+  <!-- Fondo base -->
+  <rect width="800" height="600" fill="url(#base)"/>
+
+  <!-- Glows rojos con blur -->
+  <ellipse cx="120" cy="60" rx="320" ry="220" fill="url(#glow1)" filter="url(#blur1)"/>
+  <ellipse cx="680" cy="550" rx="260" ry="180" fill="url(#glow2)" filter="url(#blur2)"/>
+  <ellipse cx="400" cy="300" rx="240" ry="160" fill="url(#glow3)" filter="url(#blur1)"/>
+
+  <!-- Grid overlay -->
+  <rect width="800" height="600" fill="url(#grid)" opacity="1"/>
+
+  <!-- Puntos de intersección -->
+  <rect width="800" height="600" fill="url(#dots)" opacity="0.8"/>
+
+  <!-- Borde sutil rojo -->
+  <rect x="1" y="1" width="798" height="598" rx="18" ry="18"
+        fill="none"
+        stroke="rgba(225,29,46,0.30)"
+        stroke-width="1.5"/>
+
+  <!-- Línea accent superior -->
+  <defs>
+    <linearGradient id="topline" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="transparent"/>
+      <stop offset="25%" stop-color="#e11d2e" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#ff4456"/>
+      <stop offset="75%" stop-color="#e11d2e" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="798" height="2" rx="1"
+        fill="url(#topline)"/>
+
+  <!-- Esquinas decorativas — HUD style -->
+  <!-- Superior izquierda -->
+  <path d="M 20 50 L 20 20 L 50 20" fill="none" stroke="#e11d2e" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Superior derecha -->
+  <path d="M 780 20 L 750 20" fill="none" stroke="#e11d2e" stroke-width="1.5" stroke-opacity="0.6"/>
+  <path d="M 780 20 L 780 50" fill="none" stroke="#e11d2e" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Inferior izquierda -->
+  <path d="M 20 550 L 20 580 L 50 580" fill="none" stroke="#e11d2e" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Inferior derecha -->
+  <path d="M 750 580 L 780 580 L 780 550" fill="none" stroke="#e11d2e" stroke-width="1.5" stroke-opacity="0.6"/>
+</svg>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LALEXPO 2026 — Invitación Exclusiva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #070707;
+      font-family: 'Inter', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── CANVAS PARTÍCULAS ── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── GLOWS DE FONDO ── */
+    .bg-glow {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 50%;
+    }
+    .bg-glow-1 {
+      width: 700px; height: 460px;
+      top: -140px; left: -180px;
+      background: radial-gradient(ellipse, rgba(225,29,46,0.22) 0%, transparent 70%);
+      animation: glowPulse1 7s ease-in-out infinite;
+    }
+    .bg-glow-2 {
+      width: 560px; height: 380px;
+      bottom: -120px; right: -120px;
+      background: radial-gradient(ellipse, rgba(225,29,46,0.14) 0%, transparent 70%);
+      animation: glowPulse2 9s ease-in-out infinite;
+    }
+    @keyframes glowPulse1 {
+      0%,100% { opacity: .65; transform: scale(1); }
+      50%      { opacity: 1;   transform: scale(1.08); }
+    }
+    @keyframes glowPulse2 {
+      0%,100% { opacity: .45; transform: scale(1); }
+      50%      { opacity: .85; transform: scale(1.12); }
+    }
+
+    /* ── GRID ── */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(rgba(225,29,46,0.04) 1px, transparent 1px),
+        repeating-linear-gradient(90deg, rgba(225,29,46,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* ── TARJETA ── */
+    .card {
+      position: relative;
+      z-index: 1;
+      background-color: #0d0d0d;
+      background-image:
+        radial-gradient(ellipse 65% 45% at 18% 12%, rgba(225,29,46,0.26) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 38% at 82% 90%, rgba(225,29,46,0.13) 0%, transparent 55%);
+      border: 1px solid rgba(225,29,46,0.28);
+      border-radius: 16px;
+      padding: 40px 36px 32px;
+      width: 100%;
+      max-width: 520px;
+      margin: 20px;
+      box-shadow:
+        0 32px 80px rgba(0,0,0,0.80),
+        0 0 0 1px rgba(255,255,255,0.04) inset;
+      animation: cardIn .6s cubic-bezier(.22,.68,0,1.2) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(24px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+
+    /* Borde luminoso rotatorio */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 17px;
+      z-index: -1;
+      background: conic-gradient(
+        from var(--angle, 0deg),
+        rgba(225,29,46,0) 0deg,
+        rgba(225,29,46,.55) 60deg,
+        rgba(255,68,86,.8) 90deg,
+        rgba(225,29,46,.55) 120deg,
+        rgba(225,29,46,0) 180deg
+      );
+      animation: spinBorder 5s linear infinite;
+      opacity: .6;
+    }
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+    @keyframes spinBorder {
+      to { --angle: 360deg; }
+    }
+
+    /* ── ESQUINAS HUD ── */
+    .hud { position: absolute; width: 26px; height: 26px; pointer-events: none; }
+    .hud-tl { top: 12px;    left: 12px;    border-top:    1.5px solid rgba(225,29,46,.7); border-left:   1.5px solid rgba(225,29,46,.7); }
+    .hud-tr { top: 12px;    right: 12px;   border-top:    1.5px solid rgba(225,29,46,.7); border-right:  1.5px solid rgba(225,29,46,.7); }
+    .hud-bl { bottom: 12px; left: 12px;    border-bottom: 1.5px solid rgba(225,29,46,.7); border-left:   1.5px solid rgba(225,29,46,.7); }
+    .hud-br { bottom: 12px; right: 12px;   border-bottom: 1.5px solid rgba(225,29,46,.7); border-right:  1.5px solid rgba(225,29,46,.7); }
+    .hud-tl,.hud-tr,.hud-bl,.hud-br { animation: hudPulse 3s ease-in-out infinite; }
+    .hud-tr { animation-delay: .75s; }
+    .hud-bl { animation-delay: 1.5s; }
+    .hud-br { animation-delay: 2.25s; }
+    @keyframes hudPulse {
+      0%,100% { opacity: .7; }
+      50%      { opacity: 1; box-shadow: 0 0 8px rgba(225,29,46,.5); }
+    }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 18px;
+      background: rgba(225,29,46,.09);
+      border: 1px solid rgba(225,29,46,.42);
+      border-radius: 20px;
+      color: #e11d2e;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      animation: badgeGlow 2.2s ease-in-out infinite;
+    }
+    @keyframes badgeGlow {
+      0%,100% { box-shadow: 0 0 0   0 rgba(225,29,46,0); }
+      50%      { box-shadow: 0 0 14px 0 rgba(225,29,46,.28); }
+    }
+    .dot {
+      width: 6px; height: 6px;
+      background: #e11d2e;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #e11d2e;
+      animation: dotBlink 1.4s ease-in-out infinite;
+    }
+    @keyframes dotBlink {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .3; transform: scale(.7); }
+    }
+
+    /* ── TÍTULO ── */
+    .title {
+      font-size: 28px;
+      font-weight: 900;
+      color: #f5f5f5;
+      line-height: 1.15;
+      margin-bottom: 8px;
+      letter-spacing: -.5px;
+    }
+    .title span { color: #e11d2e; display: block; }
+
+    /* ── SUBTÍTULO ── */
+    .subtitle {
+      font-size: 13px;
+      color: rgba(255,255,255,.38);
+      margin-bottom: 28px;
+      line-height: 1.55;
+      font-weight: 400;
+    }
+
+    /* ── FILA 2 COLUMNAS ── */
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    /* ── CAMPO ── */
+    .field { margin-bottom: 18px; }
+    .row .field { margin-bottom: 0; }
+
+    /* ── LABEL ── */
+    label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255,255,255,.33);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    /* Icono de label — flota */
+    .lbl-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+    .lbl-icon svg {
+      width: 12px; height: 12px;
+      stroke: rgba(225,29,46,.65);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    @keyframes iconFloat {
+      0%,100% { transform: translateY(0);    }
+      50%      { transform: translateY(-2px); }
+    }
+
+    /* ── INPUT WRAPPER ── */
+    .input-wrap { position: relative; }
+
+    /* Icono dentro del input — pulsa */
+    .inp-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      animation: iconGlow 2.5s ease-in-out infinite;
+    }
+    .inp-icon svg {
+      width: 16px; height: 16px;
+      stroke: rgba(225,29,46,.45);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    @keyframes iconGlow {
+      0%,100% { opacity: .45; filter: none; }
+      50%      { opacity: 1;   filter: drop-shadow(0 0 5px rgba(225,29,46,.7)); }
+    }
+
+    /* ── INPUT ── */
+    .input-wrap input,
+    .input-wrap select {
+      width: 100%;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 10px;
+      color: #f5f5f5;
+      padding: 14px 16px 14px 42px;
+      font-size: 14px;
+      font-family: 'Inter', Arial, sans-serif;
+      outline: none;
+      transition: border-color .25s, background .25s, box-shadow .25s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .input-wrap input::placeholder {
+      color: rgba(255,255,255,.22);
+      font-size: 13px;
+    }
+    .input-wrap input:focus {
+      border-color: rgba(225,29,46,.55);
+      background: rgba(225,29,46,.07);
+      box-shadow: 0 0 0 3px rgba(225,29,46,.10);
+    }
+    /* Icono activo cuando input tiene foco */
+    .input-wrap input:focus ~ .inp-icon svg,
+    .input-wrap:focus-within .inp-icon svg {
+      stroke: rgba(225,29,46,.85);
+    }
+
+    /* ── BOTÓN ── */
+    .btn-submit {
+      width: 100%;
+      background: #111111;
+      color: #ffffff;
+      border: 1px solid rgba(225,29,46,.40);
+      border-radius: 10px;
+      padding: 17px 32px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 8px;
+      font-family: 'Inter', Arial, sans-serif;
+      box-shadow: 0 0 20px rgba(225,29,46,.12);
+      transition: all .2s ease;
+      position: relative;
+      overflow: hidden;
+      display: block;
+    }
+    /* Sweep de brillo */
+    .btn-submit::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.07), transparent);
+      transition: left .45s ease;
+    }
+    .btn-submit:hover::after { left: 100%; }
+    .btn-submit:hover {
+      background: #1a1a1a;
+      border-color: rgba(225,29,46,.70);
+      box-shadow: 0 0 34px rgba(225,29,46,.28);
+      transform: translateY(-1px);
+    }
+    .btn-submit:active {
+      transform: translateY(0);
+      box-shadow: 0 0 12px rgba(225,29,46,.15);
+    }
+
+    /* Flecha animada dentro del botón */
+    .arrow {
+      display: inline-block;
+      margin-left: 6px;
+      animation: arrowMove 1.6s ease-in-out infinite;
+    }
+    @keyframes arrowMove {
+      0%,100% { transform: translateX(0); }
+      50%      { transform: translateX(4px); }
+    }
+
+    /* ── FOOTER ── */
+    .footer-text {
+      text-align: center;
+      color: rgba(255,255,255,.22);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .5px;
+      margin-top: 24px;
+    }
+
+    /* ── ÉXITO ── */
+    .success {
+      display: none;
+      text-align: center;
+      padding: 24px 0;
+    }
+    .success.show { display: block; animation: cardIn .5s ease-out; }
+    .success-check {
+      width: 56px; height: 56px;
+      border: 2px solid #e11d2e;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      animation: checkPop .5s cubic-bezier(.22,.68,0,1.3) both;
+    }
+    .success-check svg {
+      width: 28px; height: 28px;
+      stroke: #e11d2e; fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    @keyframes checkPop {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .success h2 {
+      color: #f5f5f5;
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .success p {
+      color: rgba(255,255,255,.38);
+      font-size: 13px;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 500px) {
+      .card    { padding: 28px 18px 22px; }
+      .title   { font-size: 22px; }
+      .row     { grid-template-columns: 1fr; gap: 0; }
+      .row .field { margin-bottom: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- FONDO -->
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div class="bg-grid"></div>
+<canvas id="particles"></canvas>
+
+<!-- TARJETA -->
+<div class="card">
+
+  <!-- Esquinas HUD -->
+  <div class="hud hud-tl"></div>
+  <div class="hud hud-tr"></div>
+  <div class="hud hud-bl"></div>
+  <div class="hud hud-br"></div>
+
+  <!-- Badge -->
+  <div class="badge"><div class="dot"></div>INVITACIÓN EXCLUSIVA</div>
+
+  <!-- Título -->
+  <h1 class="title">Únete a<span>LALEXPO 2026</span></h1>
+  <p class="subtitle">Completa el formulario y recibe tu invitación exclusiva al evento más importante del año.</p>
+
+  <!-- Formulario -->
+  <form id="form">
+
+    <!-- Nombre + Apellidos -->
+    <div class="row">
+      <div class="field">
+        <label>
+          <span class="lbl-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>Nombre
+        </label>
+        <div class="input-wrap">
+          <input type="text" name="nombre" placeholder="Tu nombre" required autocomplete="given-name">
+          <div class="inp-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>
+          <span class="lbl-icon" style="animation-delay:.5s">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>Apellidos
+        </label>
+        <div class="input-wrap">
+          <input type="text" name="apellidos" placeholder="Apellidos" required autocomplete="family-name">
+          <div class="inp-icon" style="animation-delay:.5s">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="field">
+      <label>
+        <span class="lbl-icon" style="animation-delay:1s">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l1.63-1.63a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </span>Teléfono
+      </label>
+      <div class="input-wrap">
+        <input type="tel" name="telefono" placeholder="+57 300 000 0000" required autocomplete="tel">
+        <div class="inp-icon" style="animation-delay:1s">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l1.63-1.63a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gmail -->
+    <div class="field">
+      <label>
+        <span class="lbl-icon" style="animation-delay:1.5s">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </span>Gmail
+      </label>
+      <div class="input-wrap">
+        <input type="email" name="email" placeholder="correo@gmail.com" required autocomplete="email">
+        <div class="inp-icon" style="animation-delay:1.5s">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón -->
+    <button type="submit" class="btn-submit">
+      QUIERO MI INVITACIÓN<span class="arrow">→</span>
+    </button>
+
+  </form>
+
+  <!-- Mensaje de éxito -->
+  <div class="success" id="success">
+    <div class="success-check">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>¡Registro exitoso!</h2>
+    <p>Te enviaremos tu invitación pronto.<br>Revisa tu correo.</p>
+  </div>
+
+  <!-- Footer -->
+  <p class="footer-text">Evento exclusivo · G7BSPAY × LALEXPO · Solo mayores de 18 años</p>
+
+</div>
+
+<script>
+/* ── PARTÍCULAS EN CANVAS ── */
+const cvs = document.getElementById('particles');
+const c   = cvs.getContext('2d');
+let pts   = [];
+const N   = 70;
+
+function resize() {
+  cvs.width  = window.innerWidth;
+  cvs.height = window.innerHeight;
+}
+
+function mkPt() {
+  return {
+    x:  Math.random() * cvs.width,
+    y:  Math.random() * cvs.height,
+    r:  Math.random() * 1.4 + .3,
+    vx: (Math.random() - .5) * .28,
+    vy: (Math.random() - .5) * .28,
+    a:  Math.random() * .35 + .08,
+    ph: Math.random() * Math.PI * 2,
+    ps: Math.random() * .018 + .008
+  };
+}
+
+function init() {
+  resize();
+  pts = Array.from({ length: N }, mkPt);
+}
+
+function draw() {
+  c.clearRect(0, 0, cvs.width, cvs.height);
+
+  // Líneas de constelación
+  for (let i = 0; i < pts.length; i++) {
+    for (let j = i + 1; j < pts.length; j++) {
+      const dx = pts[i].x - pts[j].x;
+      const dy = pts[i].y - pts[j].y;
+      const d  = Math.sqrt(dx * dx + dy * dy);
+      if (d < 110) {
+        c.beginPath();
+        c.moveTo(pts[i].x, pts[i].y);
+        c.lineTo(pts[j].x, pts[j].y);
+        c.strokeStyle = `rgba(225,29,46,${.06 * (1 - d / 110)})`;
+        c.lineWidth = .6;
+        c.stroke();
+      }
+    }
+  }
+
+  // Puntos
+  pts.forEach(p => {
+    p.x  += p.vx;
+    p.y  += p.vy;
+    p.ph += p.ps;
+    const alpha = p.a * (.55 + .45 * Math.sin(p.ph));
+    if (p.x < 0) p.x = cvs.width;
+    if (p.x > cvs.width)  p.x = 0;
+    if (p.y < 0) p.y = cvs.height;
+    if (p.y > cvs.height) p.y = 0;
+    c.beginPath();
+    c.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    c.fillStyle = `rgba(225,29,46,${alpha})`;
+    c.fill();
+  });
+
+  requestAnimationFrame(draw);
+}
+
+window.addEventListener('resize', init);
+init();
+draw();
+
+/* ── SUBMIT ── */
+document.getElementById('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  /* ── INTEGRACIÓN CON GOHIGHLEVEL ──────────────────────────────
+     Para enviar leads a GHL descomenta y completa con tus datos:
+
+  const data = new FormData(this);
+  fetch('https://services.leadconnectorhq.com/hooks/TU_LOCATION_ID/contact-us', {
+    method: 'POST',
+    body: JSON.stringify({
+      firstName: data.get('nombre'),
+      lastName:  data.get('apellidos'),
+      phone:     data.get('telefono'),
+      email:     data.get('email')
+    }),
+    headers: { 'Content-Type': 'application/json' }
+  });
+  ─────────────────────────────────────────────────────────────── */
+
+  this.style.display = 'none';
+  document.getElementById('success').classList.add('show');
+});
+</script>
+</body>
+</html>

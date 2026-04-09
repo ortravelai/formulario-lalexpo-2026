@@ -1,0 +1,306 @@
+/* ============================================================
+   LALEXPO 2026 × G7BSPAY — GoHighLevel Form
+   Diseño: Tarjeta oscura con badge, título, glows y HUD
+   ID real GHL: #_builder-form
+   ============================================================ */
+
+
+/* ============================================================
+   BODY
+   ============================================================ */
+body, html {
+  background: #0a0a0a !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
+}
+
+
+/* ============================================================
+   TARJETA PRINCIPAL — Fondo con glows + grid + HUD corners
+   ============================================================ */
+#_builder-form,
+body #_builder-form {
+  background-color: #0d0d0d !important;
+  background-image:
+    radial-gradient(ellipse 65% 45% at 18% 12%, rgba(225,29,46,0.32) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 38% at 82% 90%, rgba(225,29,46,0.18) 0%, transparent 55%),
+    repeating-linear-gradient(rgba(225,29,46,0.04) 1px, transparent 1px),
+    repeating-linear-gradient(90deg, rgba(225,29,46,0.04) 1px, transparent 1px) !important;
+  background-size: auto, auto, 48px 48px, 48px 48px !important;
+  border: 1px solid rgba(225,29,46,0.30) !important;
+  border-radius: 16px !important;
+  padding: 40px 36px 32px !important;
+  max-width: 520px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.80),
+    0 0 0 1px rgba(255,255,255,0.04) inset !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+/* ============================================================
+   BADGE — "• INVITACIÓN EXCLUSIVA"
+   ============================================================ */
+#_builder-form::before {
+  content: '• INVITACIÓN EXCLUSIVA' !important;
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 0 24px 0 !important;
+  padding: 6px 18px !important;
+  background: rgba(225,29,46,0.10) !important;
+  border: 1px solid rgba(225,29,46,0.45) !important;
+  border-radius: 20px !important;
+  color: #e11d2e !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+}
+
+/* ============================================================
+   CORNER HUD — Esquinas decorativas
+   ============================================================ */
+#_builder-form::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 16px !important;
+  pointer-events: none !important;
+  background-image:
+    /* Esquina superior izquierda */
+    linear-gradient(to right,  rgba(225,29,46,0.7) 0%, rgba(225,29,46,0.7) 28px, transparent 28px),
+    linear-gradient(to bottom, rgba(225,29,46,0.7) 0%, rgba(225,29,46,0.7) 28px, transparent 28px),
+    /* Esquina superior derecha */
+    linear-gradient(to left,   rgba(225,29,46,0.7) 0%, rgba(225,29,46,0.7) 28px, transparent 28px),
+    linear-gradient(to bottom, rgba(225,29,46,0.7) 0%, rgba(225,29,46,0.7) 28px, transparent 28px),
+    /* Esquina inferior izquierda */
+    linear-gradient(to right,  rgba(225,29,46,0.7) 0%, rgba(225,29,46,0.7) 28px, transparent 28px),
+    linear-gradient(to top,    rgba(225,29,46,0.7) 0%, rgba(225,29,46,0.7) 28px, transparent 28px),
+    /* Esquina inferior derecha */
+    linear-gradient(to left,   rgba(225,29,46,0.7) 0%, rgba(225,29,46,0.7) 28px, transparent 28px),
+    linear-gradient(to top,    rgba(225,29,46,0.7) 0%, rgba(225,29,46,0.7) 28px, transparent 28px) !important;
+  background-size:
+    100% 1.5px, 1.5px 100%,
+    100% 1.5px, 1.5px 100%,
+    100% 1.5px, 1.5px 100%,
+    100% 1.5px, 1.5px 100% !important;
+  background-position:
+    top left,    top left,
+    top right,   top right,
+    bottom left, bottom left,
+    bottom right,bottom right !important;
+  background-repeat: no-repeat !important;
+  z-index: 0 !important;
+  opacity: 0.9 !important;
+}
+
+
+/* ============================================================
+   FORM WRAPPER interior
+   ============================================================ */
+#_builder-form .form-wrapper {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+
+/* ============================================================
+   CAMPO ROWS
+   ============================================================ */
+#_builder-form .form-builder--item,
+#_builder-form .menu-field-wrap,
+#_builder-form .form-field-col--6,
+#_builder-form .form-group,
+#_builder-form .hl-field-row,
+#_builder-form .field-wrapper {
+  margin-bottom: 18px !important;
+  background: transparent !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+
+/* ============================================================
+   LABELS
+   ============================================================ */
+#_builder-form label {
+  color: rgba(255,255,255,0.35) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 2.5px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+  background: transparent !important;
+  font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+}
+
+
+/* ============================================================
+   INPUTS — Estado normal
+   ============================================================ */
+#_builder-form input[type="text"],
+#_builder-form input[type="email"],
+#_builder-form input[type="tel"],
+#_builder-form input[type="number"],
+#_builder-form input[type="password"],
+#_builder-form textarea,
+#_builder-form select,
+#_builder-form .menu-field-wrap input,
+#_builder-form .form-wrapper input {
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  border-radius: 10px !important;
+  color: #f5f5f5 !important;
+  padding: 14px 18px !important;
+  font-size: 14px !important;
+  font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: all 0.25s ease !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+
+/* ============================================================
+   INPUTS — Focus
+   ============================================================ */
+#_builder-form input[type="text"]:focus,
+#_builder-form input[type="email"]:focus,
+#_builder-form input[type="tel"]:focus,
+#_builder-form input[type="number"]:focus,
+#_builder-form textarea:focus,
+#_builder-form select:focus,
+#_builder-form .menu-field-wrap input:focus {
+  border-color: rgba(225,29,46,0.55) !important;
+  background: rgba(225,29,46,0.07) !important;
+  box-shadow: 0 0 0 3px rgba(225,29,46,0.10) !important;
+  outline: none !important;
+}
+
+
+/* ============================================================
+   PLACEHOLDER
+   ============================================================ */
+#_builder-form input::placeholder,
+#_builder-form textarea::placeholder {
+  color: rgba(255,255,255,0.22) !important;
+  opacity: 1 !important;
+  font-size: 13px !important;
+}
+
+#_builder-form input::-webkit-input-placeholder,
+#_builder-form textarea::-webkit-input-placeholder {
+  color: rgba(255,255,255,0.22) !important;
+  opacity: 1 !important;
+}
+
+#_builder-form input::-moz-placeholder,
+#_builder-form textarea::-moz-placeholder {
+  color: rgba(255,255,255,0.22) !important;
+  opacity: 1 !important;
+}
+
+
+/* ============================================================
+   BOTÓN — Oscuro con borde rojo sutil
+   ============================================================ */
+#_builder-form button[type="submit"],
+#_builder-form input[type="submit"],
+#_builder-form .hl-btn,
+#_builder-form .submit-button,
+#_builder-form .form-wrapper button[type="submit"] {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(225,29,46,0.40) !important;
+  border-radius: 10px !important;
+  padding: 17px 32px !important;
+  width: 100% !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  margin-top: 8px !important;
+  font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 0 20px rgba(225,29,46,0.12) !important;
+  transition: all 0.2s ease !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+
+/* ============================================================
+   BOTÓN — Hover
+   ============================================================ */
+#_builder-form button[type="submit"]:hover,
+#_builder-form input[type="submit"]:hover,
+#_builder-form .hl-btn:hover {
+  background: #1a1a1a !important;
+  border-color: rgba(225,29,46,0.70) !important;
+  box-shadow: 0 0 32px rgba(225,29,46,0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+
+/* ============================================================
+   BOTÓN — Active
+   ============================================================ */
+#_builder-form button[type="submit"]:active,
+#_builder-form input[type="submit"]:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 0 12px rgba(225,29,46,0.15) !important;
+}
+
+
+/* ============================================================
+   FOOTER TEXT — "Evento exclusivo · G7BSPAY × LALEXPO"
+   ============================================================ */
+#_builder-form .form-wrapper::after {
+  content: 'Evento exclusivo · G7BSPAY × LALEXPO · Solo mayores de 18 años' !important;
+  display: block !important;
+  text-align: center !important;
+  color: rgba(255,255,255,0.25) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px !important;
+  margin-top: 24px !important;
+  font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+}
+
+
+/* ============================================================
+   ASTERISCO REQUERIDO
+   ============================================================ */
+#_builder-form span.required,
+#_builder-form .required-field {
+  color: #e11d2e !important;
+}
+
+
+/* ============================================================
+   OVERRIDE fondos blancos residuales
+   ============================================================ */
+#_builder-form *:not(input):not(textarea):not(button):not(select):not(label):not(span) {
+  background-color: transparent !important;
+}

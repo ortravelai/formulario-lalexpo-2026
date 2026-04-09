@@ -1,0 +1,22 @@
+{
+  "prompt": "Dark cinematic background for a web form, ultra minimalist futuristic UI design. Pure near-black background #070707, deep dark almost black. Two dramatic red radial glows: one large glowing red haze in the top-left corner and one smaller in the bottom-right corner, color #e11d2e crimson red, soft blurred light bleed effect. Subtle repeating grid of very faint red lines forming a 48px square pattern across the entire surface, barely visible. Small glowing red dots at grid intersections. A thin bright red horizontal line accent along the very top edge fading from transparent to bright red to transparent. Futuristic HUD corner brackets in crimson red at all four corners, thin angular L-shaped lines. Dark luxury tech aesthetic, cinematic depth, no text, no people, no objects, pure abstract background texture. Style: dark mode UI background, cyberpunk minimal, premium event branding.",
+
+  "negative_prompt": "text, letters, words, people, faces, objects, logos, bright colors, white background, light background, gradients that are not red, orange, yellow, green, blue, purple, noise artifacts, blur overall, low quality, watermark",
+
+  "width": 800,
+  "height": 600,
+  "aspect_ratio": "4:3",
+
+  "style_notes": {
+    "mood": "Futuristic, cinematic, dark luxury",
+    "primary_color": "#070707",
+    "accent_color": "#e11d2e",
+    "secondary_accent": "#ff4456",
+    "lighting": "Red ambient glow only, no other light sources",
+    "texture": "Subtle grid overlay, very faint",
+    "brand": "LALEXPO 2026 x G7 Cripto"
+  },
+
+  "quality": "high",
+  "style": "digital art"
+}
