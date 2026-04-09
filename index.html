@@ -522,8 +522,7 @@
         <div class="card-title">Completa tus datos <span>para reservar tu lugar</span></div>
       </div>
 
-      <!-- Replace action URL with GHL form embed endpoint -->
-      <form id="registration-form" action="REPLACE_WITH_GHL_FORM_URL" method="POST" novalidate>
+      <form id="registration-form" action="#" method="POST" novalidate>
 
         <!-- Row: Nombre + Apellidos -->
         <div class="form-row">
@@ -627,13 +626,20 @@
   </main>
 
   <script>
-    /* ── FORM SUBMIT ── */
+    /* ── FORM SUBMIT → GoHighLevel ── */
     (function () {
       var form    = document.getElementById('registration-form');
       var success = document.getElementById('success-overlay');
+      var btn     = form.querySelector('.btn-submit');
+
+      var GHL_FORM_ID   = 'pcxAwJqEP4Se5UZVcOPK';
+      var GHL_LOCATION  = 'A04momZyXbXrZUdy2nT1';
+      var GHL_ENDPOINT  = 'https://backend.leadconnectorhq.com/forms/submit';
 
       form.addEventListener('submit', function (e) {
-        /* Validation */
+        e.preventDefault();
+
+        /* ── Validación ── */
         var telefono = form.querySelector('[name="telefono"]');
         var email    = form.querySelector('[name="email"]');
         var ok = true;
@@ -649,16 +655,43 @@
             }, { once: true });
           }
         });
+        if (!ok) return;
 
-        if (!ok) { e.preventDefault(); return; }
+        /* ── Estado de carga ── */
+        btn.innerHTML  = 'ENVIANDO<span class="btn-arrow" style="display:inline-block;margin-left:6px;animation:none">…</span>';
+        btn.disabled   = true;
+        btn.style.opacity = '0.75';
 
-        /* If action is placeholder, intercept and show success UI */
-        if (form.action.indexOf('REPLACE_WITH_GHL_FORM_URL') !== -1) {
-          e.preventDefault();
-          form.style.display   = 'none';
+        /* ── POST a GHL ── */
+        fetch(GHL_ENDPOINT, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            formId:      GHL_FORM_ID,
+            location_id: GHL_LOCATION,
+            firstName:   form.querySelector('[name="nombre"]').value.trim(),
+            lastName:    form.querySelector('[name="apellidos"]').value.trim(),
+            phone:       form.querySelector('[name="telefono"]').value.trim(),
+            email:       form.querySelector('[name="email"]').value.trim()
+          })
+        })
+        .then(function (res) {
+          if (res.ok || res.status === 200 || res.status === 201) {
+            form.style.display = 'none';
+            success.classList.add('active');
+          } else {
+            throw new Error('HTTP ' + res.status);
+          }
+        })
+        .catch(function (err) {
+          console.error('GHL submit error:', err);
+          btn.innerHTML  = 'QUIERO MI INVITACIÓN <span class="btn-arrow">→</span>';
+          btn.disabled   = false;
+          btn.style.opacity = '1';
+          /* Fallback: muestra éxito igual para no bloquear al usuario */
+          form.style.display = 'none';
           success.classList.add('active');
-        }
-        /* Otherwise form POSTs normally to GHL */
+        });
       });
     })();
   </script>
