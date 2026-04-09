@@ -660,31 +660,26 @@
         btn.disabled   = true;
         btn.style.opacity = '0.75';
 
-        /* ── POST a GHL ── */
+        /* ── POST a GHL (no-cors evita bloqueo CORS del navegador) ── */
+        var payload = new URLSearchParams({
+          firstName: form.querySelector('[name="nombre"]').value.trim(),
+          lastName:  form.querySelector('[name="apellidos"]').value.trim(),
+          phone:     form.querySelector('[name="telefono"]').value.trim(),
+          email:     form.querySelector('[name="email"]').value.trim()
+        });
+
         fetch(GHL_ENDPOINT, {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            firstName: form.querySelector('[name="nombre"]').value.trim(),
-            lastName:  form.querySelector('[name="apellidos"]').value.trim(),
-            phone:     form.querySelector('[name="telefono"]').value.trim(),
-            email:     form.querySelector('[name="email"]').value.trim()
-          })
+          method: 'POST',
+          mode:   'no-cors',
+          body:   payload
         })
-        .then(function (res) {
-          if (res.ok || res.status === 200 || res.status === 201) {
-            form.style.display = 'none';
-            success.classList.add('active');
-          } else {
-            throw new Error('HTTP ' + res.status);
-          }
+        .then(function () {
+          /* Con no-cors la respuesta es opaca — asumimos éxito */
+          form.style.display = 'none';
+          success.classList.add('active');
         })
         .catch(function (err) {
-          console.error('GHL submit error:', err);
-          btn.innerHTML  = 'QUIERO MI INVITACIÓN <span class="btn-arrow">→</span>';
-          btn.disabled   = false;
-          btn.style.opacity = '1';
-          /* Fallback: muestra éxito igual para no bloquear al usuario */
+          console.error('GHL webhook error:', err);
           form.style.display = 'none';
           success.classList.add('active');
         });
