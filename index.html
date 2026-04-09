@@ -632,9 +632,7 @@
       var success = document.getElementById('success-overlay');
       var btn     = form.querySelector('.btn-submit');
 
-      var GHL_FORM_ID   = 'pcxAwJqEP4Se5UZVcOPK';
-      var GHL_LOCATION  = 'A04momZyXbXrZUdy2nT1';
-      var GHL_ENDPOINT  = 'https://backend.leadconnectorhq.com/forms/submit';
+      var GHL_ENDPOINT  = 'https://services.leadconnectorhq.com/hooks/A04momZyXbXrZUdy2nT1/webhook-trigger/cfb7fda9-c27c-40a4-a1b4-19d361e598a1';
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -667,12 +665,10 @@
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            formId:      GHL_FORM_ID,
-            location_id: GHL_LOCATION,
-            firstName:   form.querySelector('[name="nombre"]').value.trim(),
-            lastName:    form.querySelector('[name="apellidos"]').value.trim(),
-            phone:       form.querySelector('[name="telefono"]').value.trim(),
-            email:       form.querySelector('[name="email"]').value.trim()
+            firstName: form.querySelector('[name="nombre"]').value.trim(),
+            lastName:  form.querySelector('[name="apellidos"]').value.trim(),
+            phone:     form.querySelector('[name="telefono"]').value.trim(),
+            email:     form.querySelector('[name="email"]').value.trim()
           })
         })
         .then(function (res) {
